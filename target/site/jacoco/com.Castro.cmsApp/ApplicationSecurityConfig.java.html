@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplicationSecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp</a> &gt; <span class="el_source">ApplicationSecurityConfig.java</span></div><h1>ApplicationSecurityConfig.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
+@EnableWebSecurity
+<span class="fc" id="L17">public class ApplicationSecurityConfig {</span>
+
+  @Autowired
+  private UserDetailsService userDetailsService;
+
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
+<span class="fc" id="L25">    return new BCryptPasswordEncoder();</span>
+  }
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+<span class="fc" id="L30">    http</span>
+<span class="fc" id="L31">        .authorizeHttpRequests((authz) -&gt; authz</span>
+<span class="fc" id="L32">            .anyRequest().permitAll()</span>
+        // .requestMatchers(&quot;/login&quot;, &quot;/resources/**&quot;, &quot;/css/**&quot;, &quot;/fonts/**&quot;,
+        // &quot;/img/**&quot;).permitAll()
+        // .requestMatchers(&quot;/register&quot;, &quot;/resources/**&quot;, &quot;/css/**&quot;, &quot;/fonts/**&quot;,
+        // &quot;/img/**&quot;, &quot;/js/**&quot;).permitAll()
+        // .requestMatchers(&quot;/users/addNew&quot;).permitAll()
+        // .requestMatchers(&quot;/security/user/Edit/**&quot;).hasAuthority(&quot;ADMIN&quot;)
+        // .anyRequest().authenticated()
+
+        )
+<span class="fc" id="L42">        .httpBasic(withDefaults());</span>
+<span class="fc" id="L43">    return http.build();</span>
+  }
+
+  // @Override
+  // protected void configure(HttpSecurity http) throws Exception {
+  // http
+  // .csrf().disable()
+  // .authorizeRequests()
+  // .anyRequest().authenticated()
+  // .and()
+  // .formLogin()
+  // .loginPage(&quot;/login&quot;).permitAll()
+  // .defaultSuccessUrl(&quot;/index&quot;)
+  // .and()
+  // .logout().invalidateHttpSession(true)
+  // .clearAuthentication(true)
+  // .logoutRequestMatcher(new AntPathRequestMatcher(&quot;/logout&quot;))
+  // .logoutSuccessUrl(&quot;/login&quot;).permitAll()
+  // .and()
+  // .exceptionHandling().accessDeniedPage(&quot;/accessDenied&quot;)
+  // ;
+  // }
+
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+<span class="fc" id="L68">    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();</span>
+
+<span class="fc" id="L70">    provider.setUserDetailsService(userDetailsService);</span>
+
+<span class="fc" id="L72">    provider.setPasswordEncoder(bCryptPasswordEncoder());</span>
+<span class="fc" id="L73">    return provider;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

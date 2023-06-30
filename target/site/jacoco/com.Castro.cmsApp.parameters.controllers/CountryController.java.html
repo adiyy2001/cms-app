@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CountryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.parameters.controllers</a> &gt; <span class="el_source">CountryController.java</span></div><h1>CountryController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.parameters.controllers;
+
+import com.Castro.cmsApp.parameters.models.Country;
+import com.Castro.cmsApp.parameters.services.CountryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.websocket.server.PathParam;
+import lombok.AllArgsConstructor;
+
+import java.util.List;
+
+@Controller
+<span class="fc" id="L17">@AllArgsConstructor</span>
+public class CountryController {
+
+    @Autowired
+    private CountryService countryService;
+
+//    @GetMapping(&quot;/parameters/countries&quot;)
+//    public String  getAll(Model model, String keyword){
+//        List&lt;Country&gt; countries;
+//        countries = keyword == null? countryService.findAll():countryService.findByKeyword(keyword);
+//        model.addAttribute(&quot;countries&quot;, countries);
+//        return &quot;/parameters/countries&quot;;
+//    }
+
+    @GetMapping(&quot;/parameters/countries&quot;)
+    public String getAllPages(Model model){
+<span class="nc" id="L33">        return getOnePage(model, 1);</span>
+    }
+
+    @GetMapping(&quot;/parameters/countries/page/{pageNumber}&quot;)
+    public String  getOnePage(Model model, @PathVariable(&quot;pageNumber&quot;) int currentPage){
+<span class="fc" id="L38">        Page&lt;Country&gt; page = countryService.findPage(currentPage);</span>
+<span class="fc" id="L39">        int totalPages = page.getTotalPages();</span>
+<span class="fc" id="L40">        long totalItems = page.getTotalElements();</span>
+<span class="fc" id="L41">        List&lt;Country&gt; countries = page.getContent();</span>
+
+<span class="fc" id="L43">        model.addAttribute(&quot;currentPage&quot;, currentPage);</span>
+<span class="fc" id="L44">        model.addAttribute(&quot;totalPages&quot;, totalPages);</span>
+<span class="fc" id="L45">        model.addAttribute(&quot;totalItems&quot;, totalItems);</span>
+<span class="fc" id="L46">        model.addAttribute(&quot;countries&quot;, countries);</span>
+
+<span class="fc" id="L48">        return &quot;/parameters/countries&quot;;</span>
+    }
+
+    @GetMapping(&quot;/parameters/countries/page/{pageNumber}/{field}&quot;)
+    public String getPageWithSort(Model model,
+                                  @PathVariable(&quot;pageNumber&quot;) int currentPage,
+                                  @PathVariable String field,
+                                  @PathParam(&quot;sortDir&quot;) String sortDir) {
+
+<span class="fc" id="L57">        Page&lt;Country&gt; page = countryService.findAllWithSort(field, sortDir, currentPage);</span>
+<span class="fc" id="L58">        List&lt;Country&gt; countries = page.getContent();</span>
+<span class="fc" id="L59">        int totalPages = page.getTotalPages();</span>
+<span class="fc" id="L60">        long totalItems = page.getTotalElements();</span>
+
+<span class="fc" id="L62">        model.addAttribute(&quot;currentPage&quot;, currentPage);</span>
+<span class="fc" id="L63">        model.addAttribute(&quot;totalPages&quot;, totalPages);</span>
+<span class="fc" id="L64">        model.addAttribute(&quot;totalItems&quot;, totalItems);</span>
+
+<span class="fc" id="L66">        model.addAttribute(&quot;sortDir&quot;, sortDir);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        model.addAttribute(&quot;reverseSortDir&quot;, sortDir.equals(&quot;asc&quot;) ? &quot;desc&quot; : &quot;asc&quot;);</span>
+<span class="fc" id="L68">        model.addAttribute(&quot;countries&quot;, countries);</span>
+<span class="fc" id="L69">        return &quot;/parameters/countries&quot;;</span>
+    }
+
+    //The Get Country By Id
+    @GetMapping(&quot;/parameters/country/{id}&quot;)
+    @ResponseBody
+    public Country getCountry(@PathVariable Integer id){
+<span class="fc" id="L76">        return countryService.getById(id);</span>
+    }
+
+    @GetMapping(&quot;/parameters/countryAdd&quot;)
+    public String addCountry(){
+<span class="nc" id="L81">        return &quot;parameters/countryAdd&quot;;</span>
+    }
+
+    //The op parameter is either Edit or Details
+    @GetMapping(&quot;/parameters/country/{op}/{id}&quot;)
+    public String editCountry(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L87">        Country country = countryService.getById(id);</span>
+<span class="fc" id="L88">        model.addAttribute(&quot;country&quot;, country);</span>
+<span class="fc" id="L89">        return &quot;/parameters/country&quot;+ op;</span>
+    }
+
+    @PostMapping(&quot;/parameters/countries&quot;)
+    public String save(Country country){
+<span class="fc" id="L94">        countryService.save(country);</span>
+<span class="fc" id="L95">        return &quot;redirect:/parameters/countries&quot;;</span>
+    }
+
+    @RequestMapping(value = &quot;/parameters/countries/delete/{id}&quot;, method = {RequestMethod.GET, RequestMethod.DELETE})
+    public  String delete(@PathVariable Integer id){
+<span class="fc" id="L100">        countryService.delete(id);</span>
+<span class="fc" id="L101">        return &quot;redirect:/parameters/countries&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

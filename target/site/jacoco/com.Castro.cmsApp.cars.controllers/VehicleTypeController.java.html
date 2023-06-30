@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehicleTypeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.cars.controllers</a> &gt; <span class="el_source">VehicleTypeController.java</span></div><h1>VehicleTypeController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.cars.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import com.Castro.cmsApp.cars.models.VehicleType;
+import com.Castro.cmsApp.cars.services.VehicleTypeService;
+
+import lombok.AllArgsConstructor;
+
+import java.util.Optional;
+
+@Controller
+public class VehicleTypeController {
+
+	@Autowired
+	private VehicleTypeService vehicleTypeService;
+
+	@Autowired
+<span class="fc" id="L22">	public VehicleTypeController(VehicleTypeService vehicleTypeService) {</span>
+<span class="fc" id="L23">		this.vehicleTypeService = vehicleTypeService;</span>
+<span class="fc" id="L24">	}</span>
+
+	// Get All VehicleTypes
+	@GetMapping(&quot;/cars/vehicleTypes&quot;)
+	public String findAll(Model model) {
+<span class="fc" id="L29">		model.addAttribute(&quot;vehicleTypes&quot;, vehicleTypeService.findAll());</span>
+<span class="fc" id="L30">		return &quot;/cars/vehicleTypes&quot;;</span>
+	}
+
+	@RequestMapping(&quot;/cars/vehicleType/{id}&quot;)
+	@ResponseBody
+	public Optional&lt;VehicleType&gt; findById(@PathVariable Integer id) {
+<span class="fc" id="L36">		return vehicleTypeService.findById(id);</span>
+	}
+
+	// Add VehicleType
+	@PostMapping(value = &quot;/cars/vehicleTypes&quot;)
+	public String addNew(VehicleType vehicleType) {
+<span class="fc" id="L42">		vehicleTypeService.save(vehicleType);</span>
+<span class="fc" id="L43">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
+	}
+
+	@RequestMapping(value = &quot;cars/vehicleType/delete/{id}&quot;, method = { RequestMethod.DELETE, RequestMethod.GET })
+	public String delete(@PathVariable Integer id) {
+<span class="fc" id="L48">		vehicleTypeService.delete(id);</span>
+<span class="fc" id="L49">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

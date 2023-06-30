@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionStatusService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.accounts.services</a> &gt; <span class="el_source">TransactionStatusService.java</span></div><h1>TransactionStatusService.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.accounts.services;
+
+import com.Castro.cmsApp.accounts.models.TransactionStatus;
+import com.Castro.cmsApp.accounts.repositories.TransactionStatusRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class TransactionStatusService {
+    @Autowired
+    private TransactionStatusRepository transactionStatusRepository;
+
+<span class="fc" id="L16">    public TransactionStatusService(TransactionStatusRepository transactionStatusRepository) {</span>
+<span class="fc" id="L17">        this.transactionStatusRepository = transactionStatusRepository;</span>
+<span class="fc" id="L18">    }</span>
+
+    // Get All TransactionStatuss
+    public List&lt;TransactionStatus&gt; findAll() {
+<span class="fc" id="L22">        return transactionStatusRepository.findAll();</span>
+    }
+
+    // Get TransactionStatus By Id
+    public Optional&lt;TransactionStatus&gt; findById(int id) {
+<span class="fc" id="L27">        return transactionStatusRepository.findById(id);</span>
+    }
+
+    // Delete TransactionStatus
+    public void delete(int id) {
+<span class="fc" id="L32">        transactionStatusRepository.deleteById(id);</span>
+<span class="fc" id="L33">    }</span>
+
+    // Update TransactionStatus
+    public void save(TransactionStatus transactionStatus) {
+<span class="fc" id="L37">        transactionStatusRepository.save(transactionStatus);</span>
+<span class="fc" id="L38">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

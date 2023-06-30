@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Person.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.hr.models</a> &gt; <span class="el_source">Person.java</span></div><h1>Person.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.hr.models;
+
+import com.Castro.cmsApp.parameters.models.Country;
+import com.Castro.cmsApp.parameters.models.State;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.*;
+import java.util.Date;
+
+<span class="nc bnc" id="L14" title="All 174 branches missed.">@Data</span>
+<span class="fc" id="L15">@NoArgsConstructor</span>
+<span class="nc" id="L16">@AllArgsConstructor</span>
+@MappedSuperclass
+public class Person {
+		
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="nc" id="L22">	private Integer id;</span>
+<span class="nc" id="L23">	private String firstname;</span>
+<span class="nc" id="L24">	private String lastname;</span>
+<span class="nc" id="L25">	private String othername;</span>
+
+	@Formula(value = &quot; concat(firstname, ' ', lastname) &quot;)
+<span class="nc" id="L28">	private String fullName;</span>
+
+<span class="nc" id="L30">	private String title;</span>
+<span class="nc" id="L31">	private String initials;</span>
+<span class="nc" id="L32">	private String socialSecurityNumber;</span>
+<span class="nc" id="L33">	private String gender;</span>
+<span class="nc" id="L34">	private String maritalStatus;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;countryid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L38">	private Country country;</span>
+<span class="nc" id="L39">	private Integer countryid;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;stateid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L43">	private State state;</span>
+<span class="nc" id="L44">	private Integer stateid;</span>
+	
+	@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L47">	private Date dateOfBirth;</span>
+<span class="nc" id="L48">	private String city;</span>
+<span class="nc" id="L49">	private String address;</span>
+<span class="nc" id="L50">	private String phone;</span>
+<span class="nc" id="L51">	private String mobile;</span>
+<span class="nc" id="L52">	private String email;</span>
+<span class="nc" id="L53">	private String photo;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Vehicle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.cars.models</a> &gt; <span class="el_source">Vehicle.java</span></div><h1>Vehicle.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.cars.models;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.Castro.cmsApp.hr.models.Employee;
+import com.Castro.cmsApp.parameters.models.Location;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.*;
+import java.util.Date;
+
+@Entity
+<span class="pc bpc" id="L16" title="175 of 176 branches missed.">@Data</span>
+<span class="fc" id="L17">@NoArgsConstructor</span>
+<span class="nc" id="L18">@AllArgsConstructor</span>
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = &quot;id&quot;)
+public class Vehicle {
+		
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name=&quot;id&quot;)
+<span class="nc" id="L25">	private int id;</span>
+
+<span class="nc" id="L27">	private String name;</span>
+	@ManyToOne
+	@JoinColumn(name=&quot;vehicletypeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L30">	private VehicleType vehicleType;</span>
+<span class="nc" id="L31">	private Integer vehicletypeid;	</span>
+	
+<span class="nc" id="L33">	private String vehicleNumber;</span>
+	
+	@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L36">	private Date registrationDate;</span>
+	
+	@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L39">	private Date acquisitionDate;</span>
+<span class="nc" id="L40">	private String description;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;vehiclemakeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L44">	private VehicleMake vehicleMake;</span>
+<span class="nc" id="L45">	private Integer vehiclemakeid;</span>
+	
+<span class="nc" id="L47">	private String power;</span>
+<span class="nc" id="L48">	private String fuelCapacity;</span>
+	@ManyToOne
+	@JoinColumn(name=&quot;vehiclestatusid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L51">	private VehicleStatus vehicleStatus;</span>
+<span class="nc" id="L52">	private Integer vehiclestatusid;	</span>
+	
+<span class="nc" id="L54">	private String netWeight;</span>
+
+	@ManyToOne
+	@JoinColumn(name=&quot;employeeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L58">	private Employee inCharge;</span>
+<span class="nc" id="L59">	private Integer employeeid;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;vehiclemodelid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L63">	private VehicleModel vehicleModel;	</span>
+<span class="nc" id="L64">	private Integer vehiclemodelid;</span>
+
+	@ManyToOne
+	@JoinColumn(name=&quot;locationid&quot;, insertable=false, updatable=false)	
+<span class="nc" id="L68">	private Location currentLocation;</span>
+<span class="nc" id="L69">	private Integer locationid;</span>
+	
+<span class="nc" id="L71">	private String remarks;	</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

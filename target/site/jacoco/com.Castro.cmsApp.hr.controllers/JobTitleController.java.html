@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JobTitleController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.hr.controllers</a> &gt; <span class="el_source">JobTitleController.java</span></div><h1>JobTitleController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.hr.controllers;
+
+import com.Castro.cmsApp.hr.models.JobTitle;
+import com.Castro.cmsApp.hr.services.JobTitleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+<span class="fc" id="L13">public class JobTitleController {</span>
+
+    @Autowired
+    private JobTitleService jobTitleService;
+
+    @GetMapping(&quot;/hr/jobTitles&quot;)
+    public String parameters(Model model){
+<span class="fc" id="L20">        List&lt;JobTitle&gt; jobTitles = jobTitleService.findAll();</span>
+<span class="fc" id="L21">        model.addAttribute(&quot;jobTitles&quot;, jobTitles);</span>
+<span class="fc" id="L22">        return &quot;hr/jobTitles&quot;;</span>
+    }
+
+    //Get Job Title by id
+    @GetMapping(&quot;/hr/jobTitle/{id}&quot;)
+    @ResponseBody
+    public JobTitle getById(@PathVariable Integer id){
+<span class="fc" id="L29">        return jobTitleService.findById(id).orElse(null);</span>
+    }
+
+    @PostMapping(&quot;/hr/jobTitles&quot;)
+    public String save(JobTitle jobTitle){
+<span class="fc" id="L34">        jobTitleService.save(jobTitle);</span>
+<span class="fc" id="L35">        return &quot;redirect:/hr/jobTitles&quot;;</span>
+    }
+
+    @RequestMapping(value=&quot;/hr/jobTitle/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String delete(@PathVariable Integer id) {
+<span class="fc" id="L40">        jobTitleService.delete(id);</span>
+<span class="fc" id="L41">        return &quot;redirect:/hr/jobTitles&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

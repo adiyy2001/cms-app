@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.helpdesk.controllers</a> &gt; <span class="el_source">TicketController.java</span></div><h1>TicketController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.helpdesk.controllers;
+
+import com.Castro.cmsApp.helpdesk.models.Ticket;
+import com.Castro.cmsApp.helpdesk.services.TicketService;
+import com.Castro.cmsApp.helpdesk.services.TicketStatusService;
+import com.Castro.cmsApp.parameters.services.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+
+@Controller
+public class TicketController {
+	
+	@Autowired private TicketService ticketService;
+	@Autowired private TicketStatusService ticketStatusService;
+	@Autowired private ClientService clientService;
+	
+<span class="fc" id="L22">	public TicketController(TicketService ticketService, TicketStatusService ticketStatusService, ClientService clientService) {</span>
+<span class="fc" id="L23">		this.ticketService = ticketService;</span>
+<span class="fc" id="L24">		this.ticketStatusService = ticketStatusService;</span>
+<span class="fc" id="L25">		this.clientService = clientService;</span>
+<span class="fc" id="L26">	}</span>
+
+	//Get All Tickets
+	@GetMapping(&quot;/helpdesk/tickets&quot;)
+	public String findAll(Model model){		
+<span class="fc" id="L31">		model.addAttribute(&quot;tickets&quot;, ticketService.findAll());</span>
+<span class="fc" id="L32">		model.addAttribute(&quot;clients&quot;, clientService.findAll());</span>
+<span class="fc" id="L33">		model.addAttribute(&quot;ticketStatuses&quot;, ticketStatusService.findAll());</span>
+<span class="fc" id="L34">		return &quot;/helpdesk/tickets&quot;;</span>
+	}	
+	
+	@RequestMapping(&quot;/tickets/findById&quot;)
+	@ResponseBody
+	public Optional&lt;Ticket&gt; findById(Integer id)
+	{
+<span class="fc" id="L41">		return ticketService.findById(id);</span>
+	}
+	
+	//Add Ticket
+	@PostMapping(value=&quot;/tickets/addNew&quot;)
+	public String addNew(Ticket ticket) {
+<span class="fc" id="L47">		ticketService.save(ticket);</span>
+<span class="fc" id="L48">		return &quot;redirect:/ticketList&quot;;</span>
+	}	
+	
+	@RequestMapping(value=&quot;/tickets/update&quot;, method = {RequestMethod.PUT, RequestMethod.GET})
+	public String update(Ticket ticket) {
+<span class="fc" id="L53">		ticketService.save(ticket);</span>
+<span class="fc" id="L54">		return &quot;redirect:/ticketList&quot;;</span>
+	}
+	
+	@RequestMapping(value=&quot;/tickets/delete&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String delete(Integer id) {
+<span class="fc" id="L59">		ticketService.delete(id);</span>
+<span class="fc" id="L60">		return &quot;redirect:/ticketList&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

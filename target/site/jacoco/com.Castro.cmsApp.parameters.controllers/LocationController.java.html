@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.parameters.controllers</a> &gt; <span class="el_source">LocationController.java</span></div><h1>LocationController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.parameters.controllers;
+
+import com.Castro.cmsApp.parameters.models.Location;
+import com.Castro.cmsApp.parameters.services.CountryService;
+import com.Castro.cmsApp.parameters.services.LocationService;
+import com.Castro.cmsApp.parameters.services.StateService;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+<span class="fc" id="L16">@AllArgsConstructor</span>
+public class LocationController {
+
+	@Autowired	private LocationService locationService;
+	@Autowired	private CountryService countryService;
+	@Autowired	private StateService stateService;
+
+	public Model addModelAttributes(Model model){
+<span class="fc" id="L24">		model.addAttribute(&quot;locations&quot;, locationService.findAll());</span>
+<span class="fc" id="L25">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L26">		model.addAttribute(&quot;states&quot;, stateService.findAll());</span>
+<span class="fc" id="L27">		return model;</span>
+	}
+
+	@GetMapping(&quot;/parameters/locations&quot;)
+	public String findAll(Model model){
+<span class="fc" id="L32">		addModelAttributes(model);</span>
+<span class="fc" id="L33">		return &quot;/parameters/locations&quot;;</span>
+	}
+
+	@GetMapping(&quot;/parameters/locationAdd&quot;)
+	public String addLocation(Model model){
+<span class="fc" id="L38">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L39">		return &quot;parameters/locationAdd&quot;;</span>
+	}
+
+	//The op parameter is either Edit or Details
+	@GetMapping(&quot;/parameters/location/{op}/{id}&quot;)
+	public String editLocation(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L45">		Location location = locationService.findById(id);</span>
+<span class="fc" id="L46">		model.addAttribute(&quot;location&quot;, location);</span>
+<span class="fc" id="L47">		addModelAttributes(model);</span>
+<span class="fc" id="L48">		return &quot;/parameters/location&quot;+ op; //returns locationEdit or locationDetails</span>
+	}
+
+	@PostMapping(&quot;/parameters/locations&quot;)
+	public String save(Location location) {
+<span class="fc" id="L53">		locationService.save(location);</span>
+<span class="fc" id="L54">		return &quot;redirect:/parameters/locations&quot;;</span>
+	}
+
+	@RequestMapping(value=&quot;/parameters/location/delete&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String deleteById(@PathVariable Integer id) {
+<span class="fc" id="L59">		locationService.deleteById(id);</span>
+<span class="fc" id="L60">		return &quot;redirect:/parameters/locations&quot;;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

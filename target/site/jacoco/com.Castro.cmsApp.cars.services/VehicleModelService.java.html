@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehicleModelService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.cars.services</a> &gt; <span class="el_source">VehicleModelService.java</span></div><h1>VehicleModelService.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.cars.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.Castro.cmsApp.cars.models.VehicleModel;
+import com.Castro.cmsApp.cars.repositories.VehicleModelRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L13">public class VehicleModelService {</span>
+	
+	@Autowired
+	private VehicleModelRepository vehicleModelRepository;
+	
+	//Get All VehicleModels
+	public List&lt;VehicleModel&gt; findAll(){
+<span class="fc" id="L20">		return vehicleModelRepository.findAll();</span>
+	}	
+	
+	//Get VehicleModel By Id
+	public Optional&lt;VehicleModel&gt; findById(int id) {
+<span class="fc" id="L25">		return vehicleModelRepository.findById(id);</span>
+	}	
+	
+	//Delete VehicleModel
+	public void delete(int id) {
+<span class="fc" id="L30">		vehicleModelRepository.deleteById(id);</span>
+<span class="fc" id="L31">	}</span>
+	
+	//Update VehicleModel
+	public void save(VehicleModel vehicleModel) {
+<span class="fc" id="L35">		vehicleModelRepository.save(vehicleModel);</span>
+<span class="fc" id="L36">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

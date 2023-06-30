@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehicleHireController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.cars.controllers</a> &gt; <span class="el_source">VehicleHireController.java</span></div><h1>VehicleHireController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.cars.controllers;
+
+import com.Castro.cmsApp.cars.models.VehicleHire;
+import com.Castro.cmsApp.cars.services.VehicleHireService;
+import com.Castro.cmsApp.cars.services.VehicleService;
+import com.Castro.cmsApp.parameters.services.ClientService;
+import com.Castro.cmsApp.parameters.services.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class VehicleHireController {
+	
+	@Autowired private VehicleHireService vehicleHireService;
+	@Autowired private ClientService clientService;
+	@Autowired private LocationService locationService;
+	@Autowired private VehicleService vehicleService;
+
+@Autowired
+public VehicleHireController(
+        VehicleHireService vehicleHireService,
+        ClientService clientService,
+        LocationService locationService,
+        VehicleService vehicleService
+<span class="fc" id="L27">) {</span>
+<span class="fc" id="L28">    this.vehicleHireService = vehicleHireService;</span>
+<span class="fc" id="L29">    this.clientService = clientService;</span>
+<span class="fc" id="L30">    this.locationService = locationService;</span>
+<span class="fc" id="L31">    this.vehicleService = vehicleService;</span>
+<span class="fc" id="L32">}</span>
+
+	public Model addModelAttributes(Model model){
+<span class="fc" id="L35">		model.addAttribute(&quot;clients&quot;, clientService.findAll());</span>
+<span class="fc" id="L36">		model.addAttribute(&quot;locations&quot;, locationService.findAll());</span>
+<span class="fc" id="L37">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
+<span class="fc" id="L38">		return model;</span>
+	}
+
+	//Get All VehicleHires
+	@GetMapping(&quot;/cars/hires&quot;)
+	public String findAll(Model model){		
+<span class="fc" id="L44">		model.addAttribute(&quot;hires&quot;, vehicleHireService.findAll());</span>
+<span class="fc" id="L45">		return &quot;/cars/hires&quot;;</span>
+	}
+
+	@GetMapping(&quot;/cars/hireAdd&quot;)
+	public String addHire(Model model){
+<span class="fc" id="L50">		addModelAttributes(model);</span>
+<span class="fc" id="L51">		return &quot;/cars/hireAdd&quot;;</span>
+	}
+
+	@GetMapping(&quot;/cars/hire/{op}/{id}&quot;)
+	public String editHire(Model model, @PathVariable Integer id, @PathVariable String op){
+<span class="fc" id="L56">		VehicleHire hire = vehicleHireService.findById(id);</span>
+<span class="fc" id="L57">		model.addAttribute(&quot;hire&quot;, hire);</span>
+<span class="fc" id="L58">		addModelAttributes(model);</span>
+<span class="fc" id="L59">		return &quot;/cars/hire&quot;+op;</span>
+	}
+
+	//Add VehicleHire
+	@PostMapping(&quot;/cars/hires&quot;)
+	public String addNew(VehicleHire vehicleHire) {
+<span class="fc" id="L65">		vehicleHireService.save(vehicleHire);</span>
+<span class="fc" id="L66">		return &quot;redirect:/cars/hires&quot;;</span>
+	}
+	
+	@RequestMapping(value=&quot;cars/hire/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String delete(@PathVariable Integer id) {
+<span class="fc" id="L71">		vehicleHireService.delete(id);</span>
+<span class="fc" id="L72">		return &quot;redirect:/cars/hires&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

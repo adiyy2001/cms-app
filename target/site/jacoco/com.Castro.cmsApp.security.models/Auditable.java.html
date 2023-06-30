@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Auditable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.security.models</a> &gt; <span class="el_source">Auditable.java</span></div><h1>Auditable.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.security.models;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import java.util.Date;
+
+import static jakarta.persistence.TemporalType.TIMESTAMP;
+
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+<span class="fc" id="L18">public abstract class Auditable&lt;U&gt; {</span>
+    @CreatedBy
+    protected U createdBy;
+
+    @CreatedDate
+    @Temporal(TIMESTAMP)
+    protected Date createdDate;
+
+    @LastModifiedBy
+    protected U lastModifiedBy;
+
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    protected Date lastModifiedDate;
+
+    public U getCreatedBy() {
+<span class="fc" id="L34">        return createdBy;</span>
+    }
+
+    public Date getCreatedDate() {
+<span class="fc" id="L38">        return createdDate;</span>
+    }
+
+    public U getLastModifiedBy() {
+<span class="fc" id="L42">        return lastModifiedBy;</span>
+    }
+
+    public Date getLastModifiedDate() {
+<span class="fc" id="L46">        return lastModifiedDate;</span>
+    }
+
+    public void setCreatedBy(U createdBy) {
+<span class="fc" id="L50">        this.createdBy = createdBy;</span>
+<span class="fc" id="L51">    }</span>
+
+    public void setCreatedDate(Date createdDate) {
+<span class="fc" id="L54">        this.createdDate = createdDate;</span>
+<span class="fc" id="L55">    }</span>
+
+    public void setLastModifiedBy(U lastModifiedBy) {
+<span class="fc" id="L58">        this.lastModifiedBy = lastModifiedBy;</span>
+<span class="fc" id="L59">    }</span>
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+<span class="fc" id="L62">        this.lastModifiedDate = lastModifiedDate;</span>
+<span class="fc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

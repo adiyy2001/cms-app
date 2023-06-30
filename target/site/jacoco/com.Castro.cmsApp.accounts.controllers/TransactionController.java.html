@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.accounts.controllers</a> &gt; <span class="el_source">TransactionController.java</span></div><h1>TransactionController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.accounts.controllers;
+
+import com.Castro.cmsApp.accounts.models.Transaction;
+import com.Castro.cmsApp.accounts.services.TransactionService;
+import com.Castro.cmsApp.accounts.services.TransactionStatusService;
+import com.Castro.cmsApp.accounts.services.TransactionTypeService;
+import com.Castro.cmsApp.hr.services.EmployeeService;
+import com.Castro.cmsApp.parameters.services.ClientService;
+import com.Castro.cmsApp.parameters.services.ContactService;
+import com.Castro.cmsApp.parameters.services.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+<span class="fc" id="L19">public class TransactionController {</span>
+
+    @Autowired
+    private TransactionService transactionService;
+    @Autowired
+    private TransactionStatusService transactionStatusService;
+    @Autowired
+    private TransactionTypeService transactionTypeService;
+    @Autowired
+    private ContactService contactService;
+    @Autowired
+    private SupplierService supplierService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private EmployeeService employeeService;
+
+    public Model addModelAttributes(Model model){
+<span class="fc" id="L37">        model.addAttribute(&quot;transactionStatuses&quot;, transactionStatusService.findAll());</span>
+<span class="fc" id="L38">        model.addAttribute(&quot;transactionTypes&quot;, transactionTypeService.findAll());</span>
+<span class="fc" id="L39">        model.addAttribute(&quot;contacts&quot;, contactService.findAll());</span>
+<span class="fc" id="L40">        model.addAttribute(&quot;suppliers&quot;, supplierService.findAll());</span>
+<span class="fc" id="L41">        model.addAttribute(&quot;clients&quot;, clientService.findAll());</span>
+<span class="fc" id="L42">        model.addAttribute(&quot;employees&quot;, employeeService.findAll());</span>
+<span class="fc" id="L43">        return model;</span>
+    }
+
+    @GetMapping(&quot;/accounts/transactions&quot;)
+    public String  getAll(Model model){
+<span class="fc" id="L48">        List&lt;Transaction&gt; transactions =   transactionService.findAll();</span>
+<span class="fc" id="L49">        model.addAttribute(&quot;transactions&quot;, transactions);</span>
+<span class="fc" id="L50">        addModelAttributes(model);</span>
+<span class="fc" id="L51">        return &quot;/accounts/transactions&quot;;</span>
+    }
+
+    @GetMapping(&quot;/accounts/transactionAdd&quot;)
+    public String addTransaction(Model model){
+<span class="fc" id="L56">        addModelAttributes(model);</span>
+<span class="fc" id="L57">        return &quot;accounts/transactionAdd&quot;;</span>
+    }
+
+    //The op parameter is either Edit or Details
+    @GetMapping(&quot;/accounts/transaction/{op}/{id}&quot;)
+    public String editTransaction(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L63">        Transaction transaction = transactionService.findById(id);</span>
+<span class="fc" id="L64">        model.addAttribute(&quot;transaction&quot;, transaction);</span>
+<span class="fc" id="L65">        addModelAttributes(model);</span>
+<span class="fc" id="L66">        return &quot;/accounts/transaction&quot;+ op;</span>
+    }
+
+    @PostMapping(&quot;/accounts/transactions&quot;)
+    public String save(Transaction transaction){
+<span class="fc" id="L71">        transactionService.save(transaction);</span>
+<span class="fc" id="L72">        return &quot;redirect:/accounts/transactions&quot;;</span>
+    }
+
+    @RequestMapping(value = &quot;/accounts/transactions/delete/{id}&quot;, method = {RequestMethod.GET, RequestMethod.DELETE})
+    public  String delete(@PathVariable Integer id){
+<span class="fc" id="L77">        transactionService.delete(id);</span>
+<span class="fc" id="L78">        return &quot;redirect:/accounts/transactions&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
