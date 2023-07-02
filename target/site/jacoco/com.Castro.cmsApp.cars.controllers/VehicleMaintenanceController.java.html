@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VehicleMaintenanceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.cars.controllers</a> &gt; <span class="el_source">VehicleMaintenanceController.java</span></div><h1>VehicleMaintenanceController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.cars.controllers;
+
+import com.Castro.cmsApp.cars.models.VehicleMaintenance;
+import com.Castro.cmsApp.cars.services.VehicleMaintenanceService;
+import com.Castro.cmsApp.cars.services.VehicleService;
+import com.Castro.cmsApp.parameters.services.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class VehicleMaintenanceController {
+
+	@Autowired
+	private VehicleMaintenanceService vehicleMaintenanceService;
+	@Autowired
+	private VehicleService vehicleService;
+	@Autowired
+	private SupplierService supplierService;
+
+	public VehicleMaintenanceController(VehicleMaintenanceService vehicleMaintenanceService,
+			VehicleService vehicleService,
+<span class="fc" id="L24">			SupplierService supplierService) {</span>
+<span class="fc" id="L25">		this.vehicleMaintenanceService = vehicleMaintenanceService;</span>
+<span class="fc" id="L26">		this.vehicleService = vehicleService;</span>
+<span class="fc" id="L27">		this.supplierService = supplierService;</span>
+<span class="fc" id="L28">	}</span>
+
+	public Model addModelAttributes(Model model) {
+<span class="fc" id="L31">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
+<span class="fc" id="L32">		model.addAttribute(&quot;suppliers&quot;, supplierService.findAll());</span>
+<span class="fc" id="L33">		return model;</span>
+	}
+
+	// Get All VehicleMaintenances
+	@GetMapping(&quot;/cars/maintenances&quot;)
+	public String findAll(Model model) {
+<span class="fc" id="L39">		model.addAttribute(&quot;maintenances&quot;, vehicleMaintenanceService.findAll());</span>
+<span class="fc" id="L40">		return &quot;/cars/maintenances&quot;;</span>
+	}
+
+	@GetMapping(&quot;/cars/maintenanceAdd&quot;)
+	public String addMaintenance(Model model) {
+<span class="fc" id="L45">		addModelAttributes(model);</span>
+<span class="fc" id="L46">		return &quot;/cars/maintenanceAdd&quot;;</span>
+	}
+
+	@GetMapping(&quot;/cars/maintenance/{op}/{id}&quot;)
+	public String editMaintenance(Model model, @PathVariable Integer id, @PathVariable String op) {
+<span class="fc" id="L51">		VehicleMaintenance maintenance = vehicleMaintenanceService.findById(id);</span>
+<span class="fc" id="L52">		model.addAttribute(&quot;maintenance&quot;, maintenance);</span>
+<span class="fc" id="L53">		addModelAttributes(model);</span>
+<span class="fc" id="L54">		return &quot;/cars/maintenance&quot; + op;</span>
+	}
+
+	// Add VehicleMaintenance
+	@PostMapping(&quot;/cars/maintenances&quot;)
+	public String addNew(VehicleMaintenance vehicleMaintenance) {
+<span class="fc" id="L60">		vehicleMaintenanceService.save(vehicleMaintenance);</span>
+<span class="fc" id="L61">		return &quot;redirect:/cars/maintenances&quot;;</span>
+	}
+
+	@RequestMapping(value = &quot;cars/maintenance/delete/{id}&quot;, method = { RequestMethod.DELETE, RequestMethod.GET })
+	public String delete(@PathVariable Integer id) {
+<span class="fc" id="L66">		vehicleMaintenanceService.delete(id);</span>
+<span class="fc" id="L67">		return &quot;redirect:/cars/maintenances&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

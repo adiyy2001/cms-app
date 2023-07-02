@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionStatusController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.accounts.controllers</a> &gt; <span class="el_source">TransactionStatusController.java</span></div><h1>TransactionStatusController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.accounts.controllers;
+
+import com.Castro.cmsApp.accounts.models.TransactionStatus;
+import com.Castro.cmsApp.accounts.services.TransactionStatusService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+<span class="fc" id="L13">public class TransactionStatusController {</span>
+
+    @Autowired
+    private TransactionStatusService transactionStatusService;
+
+    @GetMapping(&quot;/accounts/transactionStatuses&quot;)
+    public String parameters(Model model){
+<span class="nc" id="L20">        List&lt;TransactionStatus&gt; transactionStatuses = transactionStatusService.findAll();</span>
+<span class="nc" id="L21">        model.addAttribute(&quot;transactionStatuses&quot;, transactionStatuses);</span>
+<span class="nc" id="L22">        return &quot;/accounts/transactionStatuses&quot;;</span>
+    }
+
+    //Get Job Title by id
+    @GetMapping(&quot;/accounts/transactionStatus/{id}&quot;)
+    @ResponseBody
+    public TransactionStatus getById(@PathVariable Integer id){
+<span class="nc" id="L29">        return transactionStatusService.findById(id).orElse(null);</span>
+    }
+
+    @PostMapping(&quot;/accounts/transactionStatuses&quot;)
+    public String save(TransactionStatus transactionStatus){
+<span class="nc" id="L34">        transactionStatusService.save(transactionStatus);</span>
+<span class="nc" id="L35">        return &quot;redirect:/accounts/transactionStatuses&quot;;</span>
+    }
+
+    @RequestMapping(value=&quot;/accounts/transactionStatus/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String delete(@PathVariable Integer id) {
+<span class="nc" id="L40">        transactionStatusService.delete(id);</span>
+<span class="nc" id="L41">        return &quot;redirect:/accounts/transactionStatus&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Client.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.parameters.models</a> &gt; <span class="el_source">Client.java</span></div><h1>Client.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.parameters.models;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import jakarta.persistence.*;
+
+@Entity
+<span class="pc bpc" id="L12" title="103 of 104 branches missed.">@Data</span>
+<span class="fc" id="L13">@NoArgsConstructor</span>
+<span class="nc" id="L14">@AllArgsConstructor</span>
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = &quot;id&quot;)
+public class Client {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name=&quot;id&quot;)
+<span class="nc" id="L21">	private int id;</span>
+	
+<span class="nc" id="L23">	private String name;</span>
+<span class="nc" id="L24">	private String address;</span>
+<span class="nc" id="L25">	private String city;</span>
+<span class="nc" id="L26">	private String phone;</span>
+<span class="nc" id="L27">	private String mobile;</span>
+<span class="nc" id="L28">	private String website;</span>
+<span class="nc" id="L29">	private String email;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;countryid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L33">	private Country country;</span>
+<span class="nc" id="L34">	private Integer countryid;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;stateid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L38">	private State state;</span>
+<span class="nc" id="L39">	private Integer stateid;</span>
+	
+<span class="nc" id="L41">	private String details;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.hr.services</a> &gt; <span class="el_source">EmployeeService.java</span></div><h1>EmployeeService.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.hr.services;
+
+import com.Castro.cmsApp.hr.models.Employee;
+import com.Castro.cmsApp.hr.repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EmployeeService {
+		
+	@Autowired
+	private EmployeeRepository employeeRepository;
+	
+<span class="fc" id="L16">	public EmployeeService(EmployeeRepository employeeRepository) {</span>
+<span class="fc" id="L17">		this.employeeRepository = employeeRepository;</span>
+<span class="fc" id="L18">	}</span>
+
+	//Get All Employees
+	public List&lt;Employee&gt; findAll(){
+<span class="fc" id="L22">		return employeeRepository.findAll();</span>
+	}	
+	
+	//Get Employee By Id
+	public Employee findById(int id) {
+<span class="fc" id="L27">		return employeeRepository.findById(id).orElse(null);</span>
+	}	
+	
+	//Delete Employee
+	public void delete(int id) {
+<span class="fc" id="L32">		employeeRepository.deleteById(id);</span>
+<span class="fc" id="L33">	}</span>
+	
+	//Update Employee
+	public void save( Employee employee) {
+<span class="fc" id="L37">		employeeRepository.save(employee);</span>
+<span class="fc" id="L38">	}</span>
+	
+	//Get Employee by username
+	public Employee findByUsername(String un) {
+<span class="fc" id="L42">		return employeeRepository.findByUsername(un);</span>
+	}
+
+	//Get employee by Keyword
+	public List&lt;Employee&gt; findByKeyword(String keyword) {
+<span class="fc" id="L47">		return employeeRepository.findByKeyword(keyword);</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

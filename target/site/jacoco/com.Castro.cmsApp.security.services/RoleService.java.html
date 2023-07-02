@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.security.services</a> &gt; <span class="el_source">RoleService.java</span></div><h1>RoleService.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.security.services;
+
+import com.Castro.cmsApp.security.models.Role;
+import com.Castro.cmsApp.security.models.User;
+import com.Castro.cmsApp.security.repositories.RoleRepository;
+import com.Castro.cmsApp.security.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+
+@Service
+<span class="fc" id="L14">public class RoleService {</span>
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    //Get All Roles
+    public List&lt;Role&gt; findAll() {
+<span class="fc" id="L24">        return roleRepository.findAll();</span>
+    }
+
+    //Get Role By Id
+    public Role findById(int id) {
+<span class="fc" id="L29">        return roleRepository.findById(id).orElse(null);</span>
+    }
+
+    //Delete Role
+    public void delete(int id) {
+<span class="fc" id="L34">        roleRepository.deleteById(id);</span>
+<span class="fc" id="L35">    }</span>
+
+    //Update Role
+    public void save(Role role) {
+<span class="fc" id="L39">        roleRepository.save(role);</span>
+<span class="fc" id="L40">    }</span>
+
+    //Assign Role to User
+    public void assignUserRole(Integer userId, Integer roleId) {
+<span class="fc" id="L44">        User user = userRepository.findById(userId).orElse(null);</span>
+<span class="fc" id="L45">        Role role = roleRepository.findById(roleId).orElse(null);</span>
+<span class="fc" id="L46">        Set&lt;Role&gt; userRoles = user.getRoles();</span>
+<span class="fc" id="L47">        userRoles.add(role);</span>
+<span class="fc" id="L48">        user.setRoles(userRoles);</span>
+<span class="fc" id="L49">        userRepository.save(user);</span>
+<span class="fc" id="L50">    }</span>
+
+    //Unassign Role to User
+    public void unassignUserRole(Integer userId, Integer roleId) {
+<span class="fc" id="L54">        User user = userRepository.findById(userId).orElse(null);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        user.getRoles().removeIf(x -&gt; x.getId() == roleId);</span>
+<span class="fc" id="L56">        userRepository.save(user);</span>
+<span class="fc" id="L57">    }</span>
+
+    public Set&lt;Role&gt; getUserRoles(User user) {
+<span class="fc" id="L60">        return user.getRoles();</span>
+    }
+
+    public List&lt;Role&gt; getUserNotRoles(User user) {
+<span class="fc" id="L64">        return roleRepository.getUserNotRoles(user.getId());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

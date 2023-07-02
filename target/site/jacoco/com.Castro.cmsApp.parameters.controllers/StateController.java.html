@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StateController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.parameters.controllers</a> &gt; <span class="el_source">StateController.java</span></div><h1>StateController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.parameters.controllers;
+
+import com.Castro.cmsApp.parameters.models.State;
+import com.Castro.cmsApp.parameters.services.CountryService;
+import com.Castro.cmsApp.parameters.services.StateService;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+<span class="fc" id="L15">@AllArgsConstructor</span>
+public class StateController {
+	@Autowired private StateService stateService;
+	@Autowired private CountryService countryService;
+
+	public  Model addModelAttribute(Model model){
+<span class="fc" id="L21">		model.addAttribute(&quot;states&quot;, stateService.findAll());</span>
+<span class="fc" id="L22">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L23">		return model;</span>
+	}
+
+	//Get All States
+	@GetMapping(&quot;/parameters/states&quot;)
+	public String findAll(Model model){
+<span class="fc" id="L29">		addModelAttribute(model);</span>
+<span class="fc" id="L30">		return &quot;/parameters/states&quot;;</span>
+	}
+
+	@GetMapping(&quot;/parameters/stateAdd&quot;)
+	public String addState(Model model){
+<span class="fc" id="L35">		addModelAttribute(model);</span>
+<span class="fc" id="L36">		return &quot;parameters/stateAdd&quot;;</span>
+	}
+
+	@GetMapping(&quot;/parameters/state/{op}/{id}&quot;)
+	public String editState(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L41">		addModelAttribute(model);</span>
+<span class="fc" id="L42">		model.addAttribute(&quot;state&quot;, stateService.findById(id));</span>
+<span class="fc" id="L43">		return &quot;/parameters/state&quot; + op;</span>
+	}
+
+	//Add State
+	@PostMapping(value=&quot;/parameters/states&quot;)
+	public String addNew(State state) {
+<span class="fc" id="L49">		stateService.save(state);</span>
+<span class="fc" id="L50">		return &quot;redirect:/parameters/states&quot;;</span>
+	}
+
+	@RequestMapping(value=&quot;/parameters/states/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String delete(@PathVariable Integer id) {
+<span class="fc" id="L55">		stateService.delete(id);</span>
+<span class="fc" id="L56">		return &quot;redirect:/parameters/states&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

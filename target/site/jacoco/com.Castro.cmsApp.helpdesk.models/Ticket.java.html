@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ticket.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.helpdesk.models</a> &gt; <span class="el_source">Ticket.java</span></div><h1>Ticket.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.helpdesk.models;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.Castro.cmsApp.hr.models.Employee;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.*;
+import java.util.Date;
+
+@Entity
+<span class="nc bnc" id="L15" title="All 94 branches missed.">@Data</span>
+<span class="fc" id="L16">@NoArgsConstructor</span>
+<span class="fc" id="L17">@AllArgsConstructor</span>
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = &quot;id&quot;)
+public class Ticket {	
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="nc" id="L23">	private Integer id;</span>
+
+<span class="nc" id="L25">	private String subject;</span>
+<span class="nc" id="L26">	private String details;</span>
+	
+	@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L29">	private Date openDate;</span>
+
+	@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L32">	private Date closeDate;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;ticketstatusid&quot;, insertable=false, updatable=false)	
+<span class="nc" id="L36">	private TicketStatus ticketStatus;</span>
+<span class="nc" id="L37">	private Integer ticketstatusid;</span>
+	
+	@ManyToOne
+	@JoinColumn(name=&quot;employeeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L41">	private Employee raisedBy;</span>
+<span class="nc" id="L42">	private Integer employeeid;</span>
+
+	@ManyToOne
+	@JoinColumn(name=&quot;employeeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L46">	private Employee asignedTo;</span>
+
+<span class="nc" id="L48">	private String remarks;	</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

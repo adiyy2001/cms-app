@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringSecurityAuditorAware.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.security</a> &gt; <span class="el_source">SpringSecurityAuditorAware.java</span></div><h1>SpringSecurityAuditorAware.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.security;
+
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
+
+<span class="fc" id="L9">public class SpringSecurityAuditorAware implements AuditorAware&lt;String&gt; {</span>
+    @Override
+    public Optional&lt;String&gt; getCurrentAuditor() {
+<span class="fc" id="L12">        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span>
+<span class="fc" id="L13">        String username = authentication.getName();</span>
+
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        return Optional.ofNullable(username).filter((String s) -&gt; !s.isEmpty());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

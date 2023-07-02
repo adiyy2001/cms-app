@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.parameters.controllers</a> &gt; <span class="el_source">ClientController.java</span></div><h1>ClientController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.parameters.controllers;
+
+import com.Castro.cmsApp.parameters.models.Client;
+import com.Castro.cmsApp.parameters.services.ClientService;
+import com.Castro.cmsApp.parameters.services.CountryService;
+import com.Castro.cmsApp.parameters.services.StateService;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+<span class="fc" id="L16">@AllArgsConstructor</span>
+public class ClientController {
+
+	@Autowired	private ClientService clientService;
+	@Autowired	private CountryService countryService;
+	@Autowired	private StateService stateService;
+
+	public Model addModelAttributes(Model model){
+<span class="fc" id="L24">		model.addAttribute(&quot;clients&quot;, clientService.findAll());</span>
+<span class="fc" id="L25">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L26">		model.addAttribute(&quot;states&quot;, stateService.findAll());</span>
+<span class="fc" id="L27">		return model;</span>
+	}
+
+	@GetMapping(&quot;/parameters/clients&quot;)
+	public String findAll(Model model){
+<span class="fc" id="L32">		addModelAttributes(model);</span>
+<span class="fc" id="L33">		return &quot;/parameters/clients&quot;;</span>
+	}
+
+	@GetMapping(&quot;/parameters/clientAdd&quot;)
+	public String addClient(Model model){
+<span class="fc" id="L38">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L39">		return &quot;parameters/clientAdd&quot;;</span>
+	}
+
+	//The op parameter is either Edit or Details
+	@GetMapping(&quot;/parameters/client/{op}/{id}&quot;)
+	public String editClient(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L45">		Client client = clientService.findById(id);</span>
+<span class="fc" id="L46">		model.addAttribute(&quot;client&quot;, client);</span>
+<span class="fc" id="L47">		addModelAttributes(model);</span>
+<span class="fc" id="L48">		return &quot;/parameters/client&quot;+ op; //returns clientEdit or clientDetails</span>
+	}
+
+	@PostMapping(&quot;/parameters/clients&quot;)
+	public String save(Client client) {
+<span class="fc" id="L53">		clientService.save(client);</span>
+<span class="fc" id="L54">		return &quot;redirect:/parameters/clients&quot;;</span>
+	}
+
+	@RequestMapping(value=&quot;/parameters/clients/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String deleteById(@PathVariable Integer id) {
+<span class="fc" id="L59">		clientService.deleteById(id);</span>
+<span class="fc" id="L60">		return &quot;redirect:/parameters/clients&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

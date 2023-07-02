@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.hr.controllers</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.hr.controllers;
+
+import com.Castro.cmsApp.hr.models.Employee;
+import com.Castro.cmsApp.hr.services.EmployeeService;
+import com.Castro.cmsApp.hr.services.EmployeeTypeService;
+import com.Castro.cmsApp.hr.services.JobTitleService;
+import com.Castro.cmsApp.parameters.services.CountryService;
+import com.Castro.cmsApp.parameters.services.StateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.Principal;
+
+@Controller
+<span class="fc" id="L24">public class EmployeeController {</span>
+	
+	@Autowired private EmployeeService employeeService;
+	@Autowired private StateService stateService;
+	@Autowired private JobTitleService jobTitleService;
+	@Autowired private EmployeeTypeService employeeTypeService;
+	@Autowired private CountryService countryService;
+
+	public Model addModelAttributes(Model model){
+<span class="fc" id="L33">		model.addAttribute(&quot;countries&quot;, countryService.findAll());</span>
+<span class="fc" id="L34">		model.addAttribute(&quot;states&quot;, stateService.findAll());</span>
+<span class="fc" id="L35">		model.addAttribute(&quot;employees&quot;, employeeService.findAll());</span>
+<span class="fc" id="L36">		model.addAttribute(&quot;jobTitles&quot;, jobTitleService.findAll());</span>
+<span class="fc" id="L37">		model.addAttribute(&quot;employeeTypes&quot;, employeeTypeService.findAll());</span>
+<span class="fc" id="L38">		return model;</span>
+	}
+
+	//Get All Employees
+	@GetMapping(&quot;hr/employees&quot;)
+	public String findAll(Model model){
+<span class="fc" id="L44">		addModelAttributes(model);</span>
+<span class="fc" id="L45">		return &quot;/hr/employees&quot;;</span>
+	}	
+
+	@GetMapping(&quot;/hr/employeeAdd&quot;)
+	public String addEmployee(Model model){
+<span class="fc" id="L50">		addModelAttributes(model);</span>
+<span class="fc" id="L51">		return &quot;/hr/employeeAdd&quot;;</span>
+	}
+
+	//The op parameter is either Edit or Details
+	@GetMapping(&quot;/hr/employee/{op}/{id}&quot;)
+	public String editEmployee(@PathVariable Integer id, @PathVariable String op, Model model){
+<span class="fc" id="L57">		Employee employee = employeeService.findById(id);</span>
+<span class="fc" id="L58">		model.addAttribute(&quot;employee&quot;, employee);</span>
+<span class="fc" id="L59">		addModelAttributes(model);</span>
+<span class="fc" id="L60">		return &quot;/hr/employee&quot;+ op; //returns employeeEdit or employeeDetails</span>
+	}
+
+	//Add Employee
+	@PostMapping(&quot;/hr/employees&quot;)
+	public String addNew(Employee employee) {
+<span class="fc" id="L66">		employeeService.save(employee);</span>
+<span class="fc" id="L67">		return &quot;redirect:/hr/employees&quot;;</span>
+	}	
+
+	@RequestMapping(value=&quot;/hr/employee/delete/{id}&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
+	public String delete(@PathVariable Integer id) {
+<span class="fc" id="L72">		employeeService.delete(id);</span>
+<span class="fc" id="L73">		return &quot;redirect:/hr/employees&quot;;</span>
+	}	
+
+	@RequestMapping(value=&quot;/employees/uploadPhoto&quot;, method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity&lt;Object&gt; uploadFile(@RequestParam(&quot;file&quot;) MultipartFile file) throws IOException {
+<span class="fc" id="L78">		File newFile = new File(&quot;C:\\Users\\adria\\root\\java\\cms\\uploads&quot; + file.getOriginalFilename());</span>
+<span class="fc" id="L79">		newFile.createNewFile();</span>
+<span class="fc" id="L80">		FileOutputStream fout = new FileOutputStream(newFile);</span>
+<span class="fc" id="L81">		fout.write(file.getBytes());</span>
+<span class="fc" id="L82">		fout.close();</span>
+<span class="fc" id="L83">		return new ResponseEntity&lt;&gt;(&quot;File uploaded successfully&quot;, HttpStatus.OK);</span>
+	}	
+
+	@PostMapping(&quot;/employees/uploadPhoto2&quot;)
+	public String uploadFile2(@RequestParam(&quot;file&quot;) MultipartFile file, Principal principal) 
+			throws IllegalStateException, IOException {
+<span class="fc" id="L89">			String baseDirectory = &quot;C:\\Users\\adria\\root\\java\\cms\\src\\main\\resources\\static\\img\\photos\\&quot; ;</span>
+<span class="fc" id="L90">			file.transferTo(new File(baseDirectory + principal.getName() + &quot;.jpg&quot;));</span>
+<span class="fc" id="L91">			return &quot;redirect:/employees&quot;;</span>
+	}
+
+	@RequestMapping(value=&quot;/employee/profile&quot;)
+	public String profile(Model model, Principal principal) {
+<span class="fc" id="L96">		String un = principal.getName();</span>
+<span class="fc" id="L97">		addModelAttributes(model);</span>
+<span class="fc" id="L98">		model.addAttribute(&quot;employee&quot;, employeeService.findByUsername(un));</span>
+<span class="fc" id="L99">		return &quot;profile&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transaction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cmsApp</a> &gt; <a href="index.source.html" class="el_package">com.Castro.cmsApp.accounts.models</a> &gt; <span class="el_source">Transaction.java</span></div><h1>Transaction.java</h1><pre class="source lang-java linenums">package com.Castro.cmsApp.accounts.models;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.Castro.cmsApp.hr.models.Employee;
+import com.Castro.cmsApp.parameters.models.Client;
+import com.Castro.cmsApp.parameters.models.Contact;
+import com.Castro.cmsApp.parameters.models.Supplier;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.*;
+import java.util.Date;
+
+@Entity
+<span class="pc" id="L17">@Data</span>
+<span class="pc bpc" id="L18" title="135 of 136 branches missed.">@EqualsAndHashCode(callSuper=false)</span>
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = &quot;id&quot;)
+
+public class Transaction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="nc" id="L24">    private Integer id;</span>
+
+<span class="nc" id="L26">    private double amount;</span>
+<span class="nc" id="L27">    private String purpose;</span>
+
+    @DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)
+<span class="nc" id="L30">    private Date transactionDate;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;transactionstatusid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L34">    private TransactionStatus transactionStatus;</span>
+<span class="nc" id="L35">    private Integer transactionstatusid;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;transactiontypeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L39">    private TransactionType transactionType;</span>
+<span class="nc" id="L40">    private Integer transactiontypeid;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;contactid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L44">    private Contact contact;</span>
+<span class="nc" id="L45">    private Integer contactid;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;supplierid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L49">    private Supplier supplier;</span>
+<span class="nc" id="L50">    private Integer supplierid;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;clientid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L54">    private Client client;</span>
+<span class="nc" id="L55">    private Integer clientid;</span>
+
+    @ManyToOne
+    @JoinColumn(name=&quot;employeeid&quot;, insertable=false, updatable=false)
+<span class="nc" id="L59">    private Employee approvedBy;</span>
+<span class="nc" id="L60">    private Integer employeeid;</span>
+
+<span class="nc" id="L62">    private String remarks;</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
