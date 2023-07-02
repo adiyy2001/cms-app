@@ -63,7 +63,12 @@ To run the CmsApp application, follow these steps:
    mvn clean install
    ```
 
-4. Run the application:
+4. Build the application using Maven:
+   ```
+   mvn test jacoco:report
+   ```
+
+5. Run the application:
    ```
    mvn spring-boot:run
    ```
@@ -98,3 +103,4 @@ We express our gratitude to the open-source community for providing the tools an
 - [License](https://opensource.org/licenses/MIT)
 
 Please visit the repository for more information and to contribute to the project."
+
