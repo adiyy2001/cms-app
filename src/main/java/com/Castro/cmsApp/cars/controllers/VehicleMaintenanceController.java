@@ -19,7 +19,6 @@ public class VehicleMaintenanceController {
 	@Autowired
 	private SupplierService supplierService;
 
-	@Autowired
 	public VehicleMaintenanceController(VehicleMaintenanceService vehicleMaintenanceService,
 			VehicleService vehicleService,
 			SupplierService supplierService) {

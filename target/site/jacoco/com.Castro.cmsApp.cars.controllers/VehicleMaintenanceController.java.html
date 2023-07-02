@@ -19,53 +19,52 @@ public class VehicleMaintenanceController {
 	@Autowired
 	private SupplierService supplierService;
 
-	@Autowired
 	public VehicleMaintenanceController(VehicleMaintenanceService vehicleMaintenanceService,
 			VehicleService vehicleService,
-<span class="fc" id="L25">			SupplierService supplierService) {</span>
-<span class="fc" id="L26">		this.vehicleMaintenanceService = vehicleMaintenanceService;</span>
-<span class="fc" id="L27">		this.vehicleService = vehicleService;</span>
-<span class="fc" id="L28">		this.supplierService = supplierService;</span>
-<span class="fc" id="L29">	}</span>
+<span class="fc" id="L24">			SupplierService supplierService) {</span>
+<span class="fc" id="L25">		this.vehicleMaintenanceService = vehicleMaintenanceService;</span>
+<span class="fc" id="L26">		this.vehicleService = vehicleService;</span>
+<span class="fc" id="L27">		this.supplierService = supplierService;</span>
+<span class="fc" id="L28">	}</span>
 
 	public Model addModelAttributes(Model model) {
-<span class="fc" id="L32">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
-<span class="fc" id="L33">		model.addAttribute(&quot;suppliers&quot;, supplierService.findAll());</span>
-<span class="fc" id="L34">		return model;</span>
+<span class="fc" id="L31">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
+<span class="fc" id="L32">		model.addAttribute(&quot;suppliers&quot;, supplierService.findAll());</span>
+<span class="fc" id="L33">		return model;</span>
 	}
 
 	// Get All VehicleMaintenances
 	@GetMapping(&quot;/cars/maintenances&quot;)
 	public String findAll(Model model) {
-<span class="fc" id="L40">		model.addAttribute(&quot;maintenances&quot;, vehicleMaintenanceService.findAll());</span>
-<span class="fc" id="L41">		return &quot;/cars/maintenances&quot;;</span>
+<span class="fc" id="L39">		model.addAttribute(&quot;maintenances&quot;, vehicleMaintenanceService.findAll());</span>
+<span class="fc" id="L40">		return &quot;/cars/maintenances&quot;;</span>
 	}
 
 	@GetMapping(&quot;/cars/maintenanceAdd&quot;)
 	public String addMaintenance(Model model) {
-<span class="fc" id="L46">		addModelAttributes(model);</span>
-<span class="fc" id="L47">		return &quot;/cars/maintenanceAdd&quot;;</span>
+<span class="fc" id="L45">		addModelAttributes(model);</span>
+<span class="fc" id="L46">		return &quot;/cars/maintenanceAdd&quot;;</span>
 	}
 
 	@GetMapping(&quot;/cars/maintenance/{op}/{id}&quot;)
 	public String editMaintenance(Model model, @PathVariable Integer id, @PathVariable String op) {
-<span class="fc" id="L52">		VehicleMaintenance maintenance = vehicleMaintenanceService.findById(id);</span>
-<span class="fc" id="L53">		model.addAttribute(&quot;maintenance&quot;, maintenance);</span>
-<span class="fc" id="L54">		addModelAttributes(model);</span>
-<span class="fc" id="L55">		return &quot;/cars/maintenance&quot; + op;</span>
+<span class="fc" id="L51">		VehicleMaintenance maintenance = vehicleMaintenanceService.findById(id);</span>
+<span class="fc" id="L52">		model.addAttribute(&quot;maintenance&quot;, maintenance);</span>
+<span class="fc" id="L53">		addModelAttributes(model);</span>
+<span class="fc" id="L54">		return &quot;/cars/maintenance&quot; + op;</span>
 	}
 
 	// Add VehicleMaintenance
 	@PostMapping(&quot;/cars/maintenances&quot;)
 	public String addNew(VehicleMaintenance vehicleMaintenance) {
-<span class="fc" id="L61">		vehicleMaintenanceService.save(vehicleMaintenance);</span>
-<span class="fc" id="L62">		return &quot;redirect:/cars/maintenances&quot;;</span>
+<span class="fc" id="L60">		vehicleMaintenanceService.save(vehicleMaintenance);</span>
+<span class="fc" id="L61">		return &quot;redirect:/cars/maintenances&quot;;</span>
 	}
 
 	@RequestMapping(value = &quot;cars/maintenance/delete/{id}&quot;, method = { RequestMethod.DELETE, RequestMethod.GET })
 	public String delete(@PathVariable Integer id) {
-<span class="fc" id="L67">		vehicleMaintenanceService.delete(id);</span>
-<span class="fc" id="L68">		return &quot;redirect:/cars/maintenances&quot;;</span>
+<span class="fc" id="L66">		vehicleMaintenanceService.delete(id);</span>
+<span class="fc" id="L67">		return &quot;redirect:/cars/maintenances&quot;;</span>
 	}
 
 }

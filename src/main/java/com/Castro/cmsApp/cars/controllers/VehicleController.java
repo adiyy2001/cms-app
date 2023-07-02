@@ -4,7 +4,6 @@ import com.Castro.cmsApp.cars.models.Vehicle;
 import com.Castro.cmsApp.cars.services.*;
 import com.Castro.cmsApp.hr.services.EmployeeService;
 import com.Castro.cmsApp.parameters.services.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ public class VehicleController {
 	final private EmployeeService employeeService ;
 	final private VehicleStatusService vehicleStatusService;
 
-    @Autowired
     public VehicleController(VehicleService vehicleService,
                              VehicleTypeService vehicleTypeService,
                              VehicleMakeService vehicleMakeService,

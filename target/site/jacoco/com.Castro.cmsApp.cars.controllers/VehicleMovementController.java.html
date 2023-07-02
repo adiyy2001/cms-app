@@ -16,53 +16,52 @@ public class VehicleMovementController {
 	@Autowired private LocationService locationService;
 	@Autowired private VehicleService vehicleService;
 
-	@Autowired
 	public VehicleMovementController(VehicleMovementService vehicleMovementService,
 	                                 LocationService locationService,
-<span class="fc" id="L22">	                                 VehicleService vehicleService) {</span>
-<span class="fc" id="L23">		this.vehicleMovementService = vehicleMovementService;</span>
-<span class="fc" id="L24">		this.locationService = locationService;</span>
-<span class="fc" id="L25">		this.vehicleService = vehicleService;</span>
-<span class="fc" id="L26">	}</span>
+<span class="fc" id="L21">	                                 VehicleService vehicleService) {</span>
+<span class="fc" id="L22">		this.vehicleMovementService = vehicleMovementService;</span>
+<span class="fc" id="L23">		this.locationService = locationService;</span>
+<span class="fc" id="L24">		this.vehicleService = vehicleService;</span>
+<span class="fc" id="L25">	}</span>
 
 	public Model addModelAttributes(Model model){
-<span class="fc" id="L29">		model.addAttribute(&quot;locations1&quot;, locationService.findAll());</span>
-<span class="fc" id="L30">		model.addAttribute(&quot;locations2&quot;, locationService.findAll());</span>
-<span class="fc" id="L31">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
-<span class="fc" id="L32">		return  model;</span>
+<span class="fc" id="L28">		model.addAttribute(&quot;locations1&quot;, locationService.findAll());</span>
+<span class="fc" id="L29">		model.addAttribute(&quot;locations2&quot;, locationService.findAll());</span>
+<span class="fc" id="L30">		model.addAttribute(&quot;vehicles&quot;, vehicleService.findAll());</span>
+<span class="fc" id="L31">		return  model;</span>
 	}
 	//Get All VehicleMovements
 	@GetMapping(&quot;cars/movements&quot;)
 	public String findAll(Model model){
-<span class="fc" id="L37">		model.addAttribute(&quot;movements&quot;, vehicleMovementService.findAll());</span>
-<span class="fc" id="L38">		return &quot;cars/movements&quot;;</span>
+<span class="fc" id="L36">		model.addAttribute(&quot;movements&quot;, vehicleMovementService.findAll());</span>
+<span class="fc" id="L37">		return &quot;cars/movements&quot;;</span>
 	}
 
 	@GetMapping(&quot;/cars/movementAdd&quot;)
 	public String addMovement(Model model){
-<span class="fc" id="L43">		addModelAttributes(model);</span>
-<span class="fc" id="L44">		return &quot;/cars/movementAdd&quot;;</span>
+<span class="fc" id="L42">		addModelAttributes(model);</span>
+<span class="fc" id="L43">		return &quot;/cars/movementAdd&quot;;</span>
 	}
 
 	@GetMapping(&quot;/cars/movement/{op}/{id}&quot;)
 	public String editMovement(Model model, @PathVariable Integer id, @PathVariable String op){
-<span class="fc" id="L49">		VehicleMovement movement = vehicleMovementService.findById(id);</span>
-<span class="fc" id="L50">		model.addAttribute(&quot;movement&quot;, movement);</span>
-<span class="fc" id="L51">		addModelAttributes(model);</span>
-<span class="fc" id="L52">		return &quot;/cars/movement&quot;+op;</span>
+<span class="fc" id="L48">		VehicleMovement movement = vehicleMovementService.findById(id);</span>
+<span class="fc" id="L49">		model.addAttribute(&quot;movement&quot;, movement);</span>
+<span class="fc" id="L50">		addModelAttributes(model);</span>
+<span class="fc" id="L51">		return &quot;/cars/movement&quot;+op;</span>
 	}
 
 	//Add VehicleMovement
 	@PostMapping(&quot;/cars/movements&quot;)
 	public String addNew(VehicleMovement vehicleMovement) {
-<span class="fc" id="L58">		vehicleMovementService.save(vehicleMovement);</span>
-<span class="fc" id="L59">		return &quot;redirect:/cars/movements&quot;;</span>
+<span class="fc" id="L57">		vehicleMovementService.save(vehicleMovement);</span>
+<span class="fc" id="L58">		return &quot;redirect:/cars/movements&quot;;</span>
 	}
 	
 	@RequestMapping(value=&quot;/cars/movements/delete&quot;, method = {RequestMethod.DELETE, RequestMethod.GET})
 	public String delete(@PathVariable Integer id) {
-<span class="fc" id="L64">		vehicleMovementService.delete(id);</span>
-<span class="fc" id="L65">		return &quot;redirect:/cars/movements&quot;;</span>
+<span class="fc" id="L63">		vehicleMovementService.delete(id);</span>
+<span class="fc" id="L64">		return &quot;redirect:/cars/movements&quot;;</span>
 	}
 
 

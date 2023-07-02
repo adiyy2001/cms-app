@@ -109,7 +109,6 @@ class RoleServiceTest {
         user.setId(userId);
         Role role = new Role();
         role.setId(roleId);
-        Set<Role> userRoles = new HashSet<>();
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(roleRepository.findById(roleId)).thenReturn(Optional.of(role));
         when(userRepository.save(user)).thenReturn(user);

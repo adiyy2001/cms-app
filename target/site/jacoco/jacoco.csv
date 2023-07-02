@@ -93,7 +93,7 @@ cmsApp,com.Castro.cmsApp.accounts.controllers,TransactionController,0,99,0,0,0,2
 cmsApp,com.Castro.cmsApp.accounts.controllers,InvoiceStatusController,0,31,0,0,0,8,0,5,0,5
 cmsApp,com.Castro.cmsApp.accounts.controllers,TransactionTypeController,0,36,0,0,0,9,0,5,0,5
 cmsApp,com.Castro.cmsApp.accounts.controllers,TransactionStatusController,33,3,0,0,8,1,4,1,4,1
-cmsApp,com.Castro.cmsApp.security.models,Role,72,95,24,6,0,6,14,13,1,11
+cmsApp,com.Castro.cmsApp.security.models,Role,0,44,0,0,0,7,0,9,0,9
 cmsApp,com.Castro.cmsApp.security.models,UserPrincipal,0,49,0,2,0,14,0,9,0,8
 cmsApp,com.Castro.cmsApp.security.models,Auditable,0,31,0,0,0,13,0,9,0,9
 cmsApp,com.Castro.cmsApp.security.models,User,42,265,30,24,0,10,24,21,0,18

@@ -18,7 +18,6 @@ public class VehicleHireController {
 	@Autowired private LocationService locationService;
 	@Autowired private VehicleService vehicleService;
 
-@Autowired
 public VehicleHireController(
         VehicleHireService vehicleHireService,
         ClientService clientService,

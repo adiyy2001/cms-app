@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import com.Castro.cmsApp.cars.models.VehicleType;
 import com.Castro.cmsApp.cars.services.VehicleTypeService;
 
-import lombok.AllArgsConstructor;
-
 import java.util.Optional;
 
 @Controller
@@ -18,35 +16,34 @@ public class VehicleTypeController {
 	@Autowired
 	private VehicleTypeService vehicleTypeService;
 
-	@Autowired
-<span class="fc" id="L22">	public VehicleTypeController(VehicleTypeService vehicleTypeService) {</span>
-<span class="fc" id="L23">		this.vehicleTypeService = vehicleTypeService;</span>
-<span class="fc" id="L24">	}</span>
+<span class="fc" id="L19">	public VehicleTypeController(VehicleTypeService vehicleTypeService) {</span>
+<span class="fc" id="L20">		this.vehicleTypeService = vehicleTypeService;</span>
+<span class="fc" id="L21">	}</span>
 
 	// Get All VehicleTypes
 	@GetMapping(&quot;/cars/vehicleTypes&quot;)
 	public String findAll(Model model) {
-<span class="fc" id="L29">		model.addAttribute(&quot;vehicleTypes&quot;, vehicleTypeService.findAll());</span>
-<span class="fc" id="L30">		return &quot;/cars/vehicleTypes&quot;;</span>
+<span class="fc" id="L26">		model.addAttribute(&quot;vehicleTypes&quot;, vehicleTypeService.findAll());</span>
+<span class="fc" id="L27">		return &quot;/cars/vehicleTypes&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/cars/vehicleType/{id}&quot;)
 	@ResponseBody
 	public Optional&lt;VehicleType&gt; findById(@PathVariable Integer id) {
-<span class="fc" id="L36">		return vehicleTypeService.findById(id);</span>
+<span class="fc" id="L33">		return vehicleTypeService.findById(id);</span>
 	}
 
 	// Add VehicleType
 	@PostMapping(value = &quot;/cars/vehicleTypes&quot;)
 	public String addNew(VehicleType vehicleType) {
-<span class="fc" id="L42">		vehicleTypeService.save(vehicleType);</span>
-<span class="fc" id="L43">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
+<span class="fc" id="L39">		vehicleTypeService.save(vehicleType);</span>
+<span class="fc" id="L40">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
 	}
 
 	@RequestMapping(value = &quot;cars/vehicleType/delete/{id}&quot;, method = { RequestMethod.DELETE, RequestMethod.GET })
 	public String delete(@PathVariable Integer id) {
-<span class="fc" id="L48">		vehicleTypeService.delete(id);</span>
-<span class="fc" id="L49">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
+<span class="fc" id="L45">		vehicleTypeService.delete(id);</span>
+<span class="fc" id="L46">		return &quot;redirect:/cars/vehicleTypes&quot;;</span>
 	}
 
 }

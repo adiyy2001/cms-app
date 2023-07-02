@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import com.Castro.cmsApp.cars.models.VehicleType;
 import com.Castro.cmsApp.cars.services.VehicleTypeService;
 
-import lombok.AllArgsConstructor;
-
 import java.util.Optional;
 
 @Controller
@@ -18,7 +16,6 @@ public class VehicleTypeController {
 	@Autowired
 	private VehicleTypeService vehicleTypeService;
 
-	@Autowired
 	public VehicleTypeController(VehicleTypeService vehicleTypeService) {
 		this.vehicleTypeService = vehicleTypeService;
 	}

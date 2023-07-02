@@ -16,7 +16,6 @@ public class VehicleMovementController {
 	@Autowired private LocationService locationService;
 	@Autowired private VehicleService vehicleService;
 
-	@Autowired
 	public VehicleMovementController(VehicleMovementService vehicleMovementService,
 	                                 LocationService locationService,
 	                                 VehicleService vehicleService) {
