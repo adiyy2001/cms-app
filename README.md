@@ -100,5 +100,5 @@ We express our gratitude to the open-source community for providing the tools an
 - [Issues](https://github.com/your-username/cmsApp/issues)
 - [License](https://opensource.org/licenses/MIT)
 
-Please visit the repository for more information and to contribute to the project."
+Please visit the repository for more information and to contribute to the project.
 
